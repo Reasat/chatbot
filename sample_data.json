@@ -1,0 +1,99 @@
+{
+  "company_info": {
+    "name": "TechCorp Solutions",
+    "founded": "2020",
+    "industry": "Technology",
+    "headquarters": "San Francisco, CA",
+    "employee_count": 150,
+    "revenue": "$5.2M"
+  },
+  "products": [
+    {
+      "name": "CloudSync Pro",
+      "category": "Cloud Storage",
+      "price": 299.99,
+      "features": ["Unlimited storage", "Real-time sync", "Advanced security"],
+      "launch_date": "2021-03-15"
+    },
+    {
+      "name": "DataViz Analytics",
+      "category": "Business Intelligence",
+      "price": 499.99,
+      "features": ["Interactive dashboards", "Real-time data", "Custom reports"],
+      "launch_date": "2021-08-22"
+    },
+    {
+      "name": "SecureChat",
+      "category": "Communication",
+      "price": 199.99,
+      "features": ["End-to-end encryption", "Group messaging", "File sharing"],
+      "launch_date": "2022-01-10"
+    }
+  ],
+  "policies": {
+    "return_policy": "30 days",
+    "warranty": "1 year",
+    "support_hours": "24/7",
+    "response_time": "2 hours"
+  },
+  "team": {
+    "ceo": {
+      "name": "Sarah Johnson",
+      "experience": "15 years",
+      "background": "Former Google executive"
+    },
+    "cto": {
+      "name": "Michael Chen",
+      "experience": "12 years",
+      "background": "PhD in Computer Science"
+    },
+    "cfo": {
+      "name": "Emily Rodriguez",
+      "experience": "10 years",
+      "background": "CPA with Big 4 experience"
+    }
+  },
+  "customers": {
+    "total": 2500,
+    "satisfaction_rate": 94.5,
+    "top_industries": ["Healthcare", "Finance", "Education"],
+    "average_contract_value": 15000
+  },
+  "financials": {
+    "2023": {
+      "revenue": 5200000,
+      "profit_margin": 0.25,
+      "growth_rate": 0.35
+    },
+    "2022": {
+      "revenue": 3850000,
+      "profit_margin": 0.22,
+      "growth_rate": 0.28
+    },
+    "2021": {
+      "revenue": 3000000,
+      "profit_margin": 0.18,
+      "growth_rate": 0.15
+    }
+  },
+  "technology_stack": {
+    "frontend": ["React", "TypeScript", "Tailwind CSS"],
+    "backend": ["Python", "FastAPI", "PostgreSQL"],
+    "cloud": ["AWS", "Docker", "Kubernetes"],
+    "ai_ml": ["TensorFlow", "PyTorch", "Scikit-learn"]
+  },
+  "partnerships": [
+    {
+      "partner": "Microsoft",
+      "type": "Technology",
+      "start_date": "2022-06-01",
+      "description": "Cloud infrastructure integration"
+    },
+    {
+      "partner": "Salesforce",
+      "type": "CRM Integration",
+      "start_date": "2023-01-15",
+      "description": "Customer data synchronization"
+    }
+  ]
+} 

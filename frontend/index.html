@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-robot"></i> Chatbot</h1>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Knowledge Base Section -->
+        <div class="knowledge-base-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Upload Knowledge Base</h3>
+                    <p>Drag and drop a JSON file or click to browse</p>
+                    <input type="file" id="fileInput" accept=".json" style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        Choose File
+                    </button>
+                </div>
+            </div>
+            
+            <div class="kb-status" id="kbStatus" style="display: none;">
+                <div class="status-card">
+                    <i class="fas fa-database"></i>
+                    <div class="status-info">
+                        <h4>Knowledge Base Loaded</h4>
+                        <p id="kbInfo">Processing...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <i class="fas fa-robot"></i>
+                        <div class="text">
+                            Hello! I'm your AI assistant. Upload a JSON knowledge base to get started, or ask me anything!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="messageInput" placeholder="Type your message..." maxlength="1000">
+                    <button id="sendButton" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-options">
+                    <label class="rag-toggle">
+                        <input type="checkbox" id="ragToggle" checked>
+                        <span class="toggle-slider"></span>
+                        Use Knowledge Base
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Response Details Modal -->
+        <div class="modal" id="responseModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Response Details</h3>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-section">
+                        <h4>Sources Used</h4>
+                        <div id="sourcesList"></div>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Confidence</h4>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <span id="confidenceText">0%</span>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Processing Time</h4>
+                        <span id="processingTime">0ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
