@@ -296,7 +296,20 @@ function showError(message) {
 }
 
 function showLoading(message) {
-    addMessage('bot', `<div class="loading"></div> ${message}`);
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message bot-message';
+    
+    messageDiv.innerHTML = `
+        <div class="message-content">
+            <i class="fas fa-robot"></i>
+            <div class="text">
+                <div class="loading"></div> ${message}
+            </div>
+        </div>
+    `;
+    
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
 }
 
 function hideLoading() {
