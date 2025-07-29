@@ -139,9 +139,7 @@ async function checkKnowledgeBaseStatus() {
         const response = await fetch(`${API_BASE_URL}/knowledge-base-status`);
         if (response.ok) {
             const status = await response.json();
-            if (status.loaded) {
-                showKnowledgeBaseStatus(status);
-            }
+            showKnowledgeBaseStatus(status);
         }
     } catch (error) {
         console.error('Status check failed:', error);
@@ -150,9 +148,15 @@ async function checkKnowledgeBaseStatus() {
 
 function showKnowledgeBaseStatus(status) {
     knowledgeBaseLoaded = status.loaded;
-    uploadArea.style.display = 'none';
-    kbStatus.style.display = 'block';
-    kbInfo.textContent = `${status.chunks_count} chunks loaded`;
+    
+    if (status.loaded) {
+        uploadArea.style.display = 'none';
+        kbStatus.style.display = 'block';
+        kbInfo.textContent = `${status.chunks_count} chunks loaded`;
+    } else {
+        uploadArea.style.display = 'block';
+        kbStatus.style.display = 'none';
+    }
 }
 
 // Chat Functions
