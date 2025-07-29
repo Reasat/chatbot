@@ -2,9 +2,9 @@
 
 echo "🔧 Setting up AWS Chatbot with RAG..."
 
-# Create virtual environment
-echo "📦 Creating virtual environment..."
-python3 -m venv venv
+# Create virtual environment with Python 3.11
+echo "📦 Creating virtual environment with Python 3.11..."
+python3.11 -m venv venv
 
 # Activate virtual environment
 echo "🔧 Activating virtual environment..."

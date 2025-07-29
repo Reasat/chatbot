@@ -12,6 +12,8 @@ A minimal chatbot application with RAG (Retrieval-Augmented Generation) using AW
 
 ## Quick Start
 
+**Prerequisites**: Python 3.11+ installed on your system
+
 1. **Setup environment**
    ```bash
    bash setup.sh
