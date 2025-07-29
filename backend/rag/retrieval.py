@@ -8,10 +8,7 @@ class RAGPipeline:
         self.bedrock_client = bedrock_client
     
     async def process_query(self, query: str) -> Tuple[str, List[Dict[str, Any]], float]:
-        """
-        Process query using RAG pipeline
-        Returns: (response, sources, confidence)
-        """
+        """Process query using RAG pipeline"""
         # Retrieve relevant documents
         sources = self.vector_store.search(query, top_k=5)
         
@@ -32,19 +29,14 @@ class RAGPipeline:
         return response, sources, confidence
     
     def _build_context(self, sources: List[Dict[str, Any]]) -> str:
-        """
-        Build context string from retrieved sources
-        """
+        """Build context string from retrieved sources"""
         context_parts = []
         for i, source in enumerate(sources, 1):
             context_parts.append(f"{i}. {source['key_path']}: {source['content']}")
-        
         return "\n".join(context_parts)
     
     def _calculate_confidence(self, sources: List[Dict[str, Any]]) -> float:
-        """
-        Calculate confidence score based on source relevance
-        """
+        """Calculate confidence score based on source relevance"""
         if not sources:
             return 0.0
         
@@ -52,15 +44,11 @@ class RAGPipeline:
         avg_distance = sum(source["distance"] for source in sources) / len(sources)
         
         # Convert distance to confidence (0-1 scale)
-        # Assuming distances are typically 0-2, with 0 being perfect match
         confidence = max(0.0, min(1.0, 1.0 - avg_distance / 2.0))
-        
         return confidence
     
     async def _generate_with_context(self, query: str, context: str, sources: List[Dict[str, Any]]) -> str:
-        """
-        Generate response using context and sources
-        """
+        """Generate response using context and sources"""
         prompt = f"""You are a helpful assistant that answers questions based on the provided knowledge base.
 
 Knowledge Base Context:

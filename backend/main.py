@@ -18,7 +18,7 @@ app = FastAPI(title="Chatbot", version="1.0.0")
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For POC, allow all origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,8 +26,8 @@ app.add_middleware(
 
 # Initialize components
 document_processor = DocumentProcessor()
-vector_store = VectorStore(mock_mode=True)  # Use mock mode for testing
-bedrock_client = BedrockClient(mock_mode=True)  # Use mock mode for testing
+vector_store = VectorStore(mock_mode=False)  # Use AWS Titan embeddings
+bedrock_client = BedrockClient(mock_mode=False)  # Use real AWS Bedrock
 rag_pipeline = RAGPipeline(vector_store, bedrock_client)
 
 class ChatRequest(BaseModel):
@@ -40,55 +40,39 @@ class ChatResponse(BaseModel):
     confidence: float
     processing_time: float
 
-class KnowledgeBaseStatus(BaseModel):
-    loaded: bool
-    document_count: int
-    chunks_count: int
-
-@app.get("/")
-async def root():
-    return {"message": "Chatbot API"}
-
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    """Health check endpoint"""
+    return {"status": "healthy", "message": "Chatbot API is running"}
 
-@app.post("/upload-knowledge-base", response_model=KnowledgeBaseStatus)
+@app.post("/upload-knowledge-base")
 async def upload_knowledge_base(file: UploadFile = File(...)):
-    """Upload JSON knowledge base document"""
+    """Upload and process JSON knowledge base"""
     try:
-        if not file.filename.endswith('.json'):
-            raise HTTPException(status_code=400, detail="Only JSON files are supported")
-        
-        # Read and parse JSON
+        # Read file content
         content = await file.read()
         json_data = json.loads(content.decode('utf-8'))
         
-        # Process document into chunks
+        # Process JSON into chunks
         chunks = document_processor.process_json(json_data)
         
-        # Store in vector database
+        # Add to vector store
         vector_store.add_documents(chunks)
         
-        return KnowledgeBaseStatus(
-            loaded=True,
-            document_count=1,
-            chunks_count=len(chunks)
-        )
-    
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Invalid JSON format")
+        return {
+            "message": f"Knowledge base uploaded successfully",
+            "chunks_processed": len(chunks),
+            "status": "success"
+        }
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing document: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
-@app.get("/knowledge-base-status", response_model=KnowledgeBaseStatus)
+@app.get("/knowledge-base-status")
 async def get_knowledge_base_status():
     """Get current knowledge base status"""
-    try:
-        status = vector_store.get_status()
-        return KnowledgeBaseStatus(**status)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error getting status: {str(e)}")
+    status = vector_store.get_status()
+    return status
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
